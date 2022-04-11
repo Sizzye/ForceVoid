@@ -1,0 +1,228 @@
+
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Force Void", "Ocean")
+
+
+-- MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("Main")
+MainSection:NewButton("Starter Village", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(142.81495666503906, 1770.2308349609375, 746.8270874023438)
+end)
+MainSection:NewButton("Itte", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-702.9471435546875, 1654.2313232421875, 568.49853515625)
+end)
+MainSection:NewButton("Sithbase", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1548.9874267578125, 1660.4993896484375, 695.9258422851562)
+end)
+MainSection:NewButton("SithMedic", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(2190.962646484375, 1700.69482421875, 609.2374877929688)
+end)
+MainSection:NewButton("Tat", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(7768.67236328125, 1674.453369140625, 4801.517578125)
+end)
+MainSection:NewButton("Illum", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-194.28079223632812, 1650.444580078125, -7154.279296875)
+end)
+MainSection:NewButton("Kashyyk", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-6377.234375, 1742.4285888671875, -3681.19384765625)
+end)
+MainSection:NewButton("Kira", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-340.5177917480469, 1635.568115234375, 2357.232666015625)
+end)
+MainSection:NewButton("Hakari", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-596.1539916992188, 1749.7454833984375, 947.689697265625)
+end)
+MainSection:NewButton("Sinfonia", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(6474.091796875, 1688.1697998046875, 5773.58935546875)
+end)
+MainSection:NewButton("Inside Jedi Temple/JediStyle", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-93.7793197631836, 1575.44189453125, -5451.96923828125)
+end)
+MainSection:NewButton("Bank", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(7624.49462890625, 1706.9002685546875, 4691.47119140625)
+end)
+MainSection:NewButton("NovaCrystals", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(6816.7197265625, 1669.95751953125, 4867.55810546875)
+end)
+MainSection:NewButton("KyberCrystals", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(7881.5615234375, 1657.00048828125, 5919.78271484375)
+end)
+
+
+-- MISC
+
+local Misc = Window:NewTab("Other Shit")
+local MiscSection = Misc:NewSection("Main")
+MiscSection:NewButton("Redo Character", "nigga read the name", function(v)
+    game:GetService("TeleportService"):Teleport(7719681925, player)
+end)                
+
+MiscSection:NewDropdown("Gun Mod", "Makes the gun op", {"Fallsaber", "Lightsaber"}, function(v)
+    local module = nill
+    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v) then
+        module = require(game:GetService("Players").LocalPlayer.Backpack[v].WeaponStats)
+    elseif  game:GetService("Players").LocalPlayer.Character:FindFirstChild(v) then 
+        module = require(game:GetService("Players").LocalPlayer.Character[v].WeaponStats)
+    end
+    if module ~= nill then
+        module["primaryDMG"] = 20
+        module["attackSpeed"] = 0.1
+        module["skill1DMG"] = 20
+        module["skill2DMG"] = 20
+    end
+
+end)
+MiscSection:NewButton("No Fall damage", "nigga read the name", function()
+    if game:GetService('ReplicatedStorage').Requests:FindFirstChild('FallDamage') then
+        game:GetService('ReplicatedStorage').Requests:FindFirstChild('FallDamage'):Destroy()
+    end  
+end)
+MiscSection:NewButton("Join Small server", "nigga read the name", function()
+    local PlaceID = game.PlaceId
+local AllIDs = {}
+local foundAnything = ""
+local actualHour = os.date("!*t").hour
+local Deleted = false
+local File = pcall(function()
+    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
+end)
+if not File then
+    table.insert(AllIDs, actualHour)
+    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+end
+function TPReturner()
+    local Site;
+    if foundAnything == "" then
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+    else
+        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+    end
+    local ID = ""
+    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+        foundAnything = Site.nextPageCursor
+    end
+    local num = 0;
+    for i,v in pairs(Site.data) do
+        local Possible = true
+        ID = tostring(v.id)
+        if tonumber(v.maxPlayers) > tonumber(v.playing) then
+            for _,Existing in pairs(AllIDs) do
+                if num ~= 0 then
+                    if ID == tostring(Existing) then
+                        Possible = false
+                    end
+                else
+                    if tonumber(actualHour) ~= tonumber(Existing) then
+                        local delFile = pcall(function()
+                            delfile("NotSameServers.json")
+                            AllIDs = {}
+                            table.insert(AllIDs, actualHour)
+                        end)
+                    end
+                end
+                num = num + 1
+            end
+            if Possible == true then
+                table.insert(AllIDs, ID)
+                wait()
+                pcall(function()
+                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
+                    wait()
+                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                end)
+                wait(4)
+            end
+        end
+    end
+end
+
+function Teleport()
+    while wait() do
+        pcall(function()
+            TPReturner()
+            if foundAnything ~= "" then
+                TPReturner()
+            end
+        end)
+    end
+end
+end)
+MiscSection:NewButton("Normal Server hop", "nigga read the name", function()
+    game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+end)
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Anti-Ban";
+    Text = "Enabled!";
+     Duration = 15;
+      })
+
+
+
+
+
+
+local AdminList = {
+3046083111,
+20124427,
+52544902,
+7214704,
+1224343617,
+55922495,
+44569437,
+96171060,
+192280497,
+34397758,
+29876845,
+428187416,
+43003509,
+75859777,
+922483516,
+83649444,
+374645939,
+601538833,
+1794857338,
+1194634955,
+274353199,
+601538833,
+147753731,
+23894999,
+82589500
+}
+
+
+for i,v in pairs(game.Players:GetPlayers()) do
+for i,id in pairs(AdminList) do
+if v.UserId == id then
+game.Workspace.GameEvents.GoToMenu:FireServer(0)
+            game.StarterGui:SetCore("SendNotification", {
+    Title = "Anti-Ban";
+    Text = "A mod/admin joined the server! You have been warned do so anything ur mom wouldn't do";
+     Duration = 15;
+     })
+end
+end
+end
+
+game.Players.PlayerAdded:Connect(function(player)
+for i, v in pairs(AdminList) do
+if player.UserId == v then
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Anti-Ban";
+    Text = "A mod/admin joined the server! You have been warned do so anything ur mom wouldn't do";
+     Duration = 15;
+     })
+ wait(1)
+game.Workspace.GameEvents.GoToMenu:FireServer(2)
+end
+end
+end)
+
+
+
+
+
+-- CREDITS
+local Credits = Window:NewTab("Credits")
+
