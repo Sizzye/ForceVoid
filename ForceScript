@@ -1,7 +1,5 @@
-
 local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
 local Window = Library.CreateLib("Force Void", "Ocean")
-
 
 -- MAIN
 local Main = Window:NewTab("Main")
@@ -56,23 +54,16 @@ local Misc = Window:NewTab("Other Shit")
 local MiscSection = Misc:NewSection("Main")
 MiscSection:NewButton("Redo Character", "nigga read the name", function(v)
     game:GetService("TeleportService"):Teleport(7719681925, player)
-end)                
-
-MiscSection:NewDropdown("Gun Mod", "Makes the gun op", {"Fallsaber", "Lightsaber"}, function(v)
-    local module = nill
-    if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(v) then
-        module = require(game:GetService("Players").LocalPlayer.Backpack[v].WeaponStats)
-    elseif  game:GetService("Players").LocalPlayer.Character:FindFirstChild(v) then 
-        module = require(game:GetService("Players").LocalPlayer.Character[v].WeaponStats)
-    end
-    if module ~= nill then
-        module["primaryDMG"] = 20
-        module["attackSpeed"] = 0.1
-        module["skill1DMG"] = 20
-        module["skill2DMG"] = 20
-    end
-
 end)
+
+MiscSection:NewToggle("TrinketFarm", "Read it nigga what are you a monkey?", function(state)
+    if state then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sizzye/Tfv/main/Trinketshit"))()
+    else
+        _G.trinket = false
+    end
+end)
+
 MiscSection:NewButton("No Fall damage", "nigga read the name", function()
     if game:GetService('ReplicatedStorage').Requests:FindFirstChild('FallDamage') then
         game:GetService('ReplicatedStorage').Requests:FindFirstChild('FallDamage'):Destroy()
