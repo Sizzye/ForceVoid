@@ -64,7 +64,7 @@ MiscSection:NewToggle("TrinketFarm", "Read it nigga what are you a monkey?", fun
     end
 end)
 
-MiscSection:NewToggle("TrinketFarm", "Read it nigga what are you a monkey?", function(state)
+MiscSection:NewToggle("CrateFarm", "Read it nigga what are you a monkey?", function(state)
     if state then
         loadstring(game:HttpGet("https://raw.githubusercontent.com/Sizzye/CrateFarm/main/CrateShit"))()
     else
