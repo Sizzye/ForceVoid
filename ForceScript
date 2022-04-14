@@ -64,6 +64,14 @@ MiscSection:NewToggle("TrinketFarm", "Read it nigga what are you a monkey?", fun
     end
 end)
 
+MiscSection:NewToggle("TrinketFarm", "Read it nigga what are you a monkey?", function(state)
+    if state then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sizzye/CrateFarm/main/CrateShit"))()
+    else
+        _G.CrateFarm = false
+    end
+end)
+
 MiscSection:NewButton("No Fall damage", "nigga read the name", function()
     if game:GetService('ReplicatedStorage').Requests:FindFirstChild('FallDamage') then
         game:GetService('ReplicatedStorage').Requests:FindFirstChild('FallDamage'):Destroy()
@@ -216,4 +224,3 @@ end)
 
 -- CREDITS
 local Credits = Window:NewTab("Credits")
-
