@@ -11,7 +11,7 @@ MainSection:NewButton("Inside Jedi Temple/JediStyle", "Teleport", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-93.7793197631836, 1575.44189453125, -5451.96923828125)
 end)
 MainSection:NewButton("Sithbase", "Teleport", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1548.9874267578125, 1660.4993896484375, 695.9258422851562)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1592.4591064453125, 1660.5330810546875, 740.3804931640625)
 end)
 local MainSection = Main:NewSection("Planets")
 MainSection:NewButton("Tat", "Teleport", function()
@@ -233,7 +233,7 @@ if v.UserId == id then
 game.Workspace.GameEvents.GoToMenu:FireServer(0)
             game.StarterGui:SetCore("SendNotification", {
     Title = "Anti-Ban";
-    Text = "A mod/admin joined the server! You have been warned do so anything ur mom wouldn't do";
+    Text = "A mod/admin joined the server! You have been warned so don't do anything ur mom wouldn't do";
      Duration = 15;
      })
 end
@@ -245,7 +245,7 @@ for i, v in pairs(AdminList) do
 if player.UserId == v then
 game.StarterGui:SetCore("SendNotification", {
     Title = "Anti-Ban";
-    Text = "A mod/admin joined the server! You have been warned do so anything ur mom wouldn't do";
+    Text = "A mod/admin joined the server! You have been warned so don't do anything ur mom wouldn't do";
      Duration = 15;
      })
  wait(1)
