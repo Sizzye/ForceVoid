@@ -11,7 +11,7 @@ MainSection:NewButton("Inside Jedi Temple/JediStyle", "Teleport", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-93.7793197631836, 1575.44189453125, -5451.96923828125)
 end)
 MainSection:NewButton("Sithbase", "Teleport", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1560.841064453125, 1660.3221435546875, 648.8729248046875)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1592.4591064453125, 1660.5330810546875, 740.3804931640625)
 end)
 local MainSection = Main:NewSection("Planets")
 MainSection:NewButton("Tat", "Teleport", function()
@@ -68,6 +68,9 @@ end)
 MainSection:NewButton("Wiping Hole", "Teleport", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(7978.4736328125, 1630.0369873046875, 5285.9765625)
 end)
+MainSection:NewButton("Inside Abyyse", "Teleport", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(8064.74755859375, 1156.3411865234375, 5325.6220703125)
+end)
 
 
 
@@ -87,6 +90,20 @@ MiscSection:NewButton("Silent Aim", "nigga read the name", function(v)
     loadstring(game:HttpGet("https://raw.githubusercontent.com/Averiias/Universal-SilentAim/main/main.lua"))()
 end)
 local MiscSection = Misc:NewSection("Game Mods WIP")
+MiscSection:NewButton("FullBrightness", "nigga read the name", function(v)
+        local s = Instance.new("PointLight", game.Players.LocalPlayer.Character.Head)
+    s.Brightness = .3
+    s.Range = 100
+
+    game.Lighting.Changed:connect(function()
+    game.Lighting.TimeOfDay = "14:00:00"
+    game.Lighting.FogEnd = 9999
+    game.Lighting.Brightness = 2
+    game.Lighting.ColorCorrection.Brightness = 0.1
+    game.Lighting.ColorCorrection.Saturation = 0.1
+    game.Lighting.Bloom.Intensity = 0.1
+    end)
+end)
 MiscSection:NewButton("Redo Character", "nigga read the name", function(v)
     game:GetService("TeleportService"):Teleport(7719681925, player)
 end)
@@ -113,77 +130,32 @@ MiscSection:NewToggle("CrateFarm", "Read it nigga what are you a monkey?", funct
 end)
 
 local MiscSection = Misc:NewSection("Servers")
-MiscSection:NewButton("Join Small server", "nigga read the name", function()
-    local PlaceID = game.PlaceId
-local AllIDs = {}
-local foundAnything = ""
-local actualHour = os.date("!*t").hour
-local Deleted = false
-local File = pcall(function()
-    AllIDs = game:GetService('HttpService'):JSONDecode(readfile("NotSameServers.json"))
-end)
-if not File then
-    table.insert(AllIDs, actualHour)
-    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-end
-function TPReturner()
-    local Site;
-    if foundAnything == "" then
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
-    else
-        Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
-    end
-    local ID = ""
-    if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
-        foundAnything = Site.nextPageCursor
-    end
-    local num = 0;
-    for i,v in pairs(Site.data) do
-        local Possible = true
-        ID = tostring(v.id)
-        if tonumber(v.maxPlayers) > tonumber(v.playing) then
-            for _,Existing in pairs(AllIDs) do
-                if num ~= 0 then
-                    if ID == tostring(Existing) then
-                        Possible = false
-                    end
-                else
-                    if tonumber(actualHour) ~= tonumber(Existing) then
-                        local delFile = pcall(function()
-                            delfile("NotSameServers.json")
-                            AllIDs = {}
-                            table.insert(AllIDs, actualHour)
-                        end)
-                    end
-                end
-                num = num + 1
-            end
-            if Possible == true then
-                table.insert(AllIDs, ID)
-                wait()
-                pcall(function()
-                    writefile("NotSameServers.json", game:GetService('HttpService'):JSONEncode(AllIDs))
-                    wait()
-                    game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
-                end)
-                wait(4)
-            end
+MiscSection:NewButton("Join Small server(Doesn't work WIP)", "nigga read the name", function()
+    local TeleportService = game:GetService("TeleportService")
+local HttpService = game:GetService("HttpService")
+
+local BaseAPI = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100&cursor="
+local ServerData = HttpService:JSONDecode(game:HttpGet(BaseAPI))
+local ServerJobIDs = {}
+while true do
+    local NextPage = ServerData.nextPageCursor
+    local Servers = ServerData.data
+    for _, Server in pairs(Servers) do
+        if Server.playing < Server.maxPlayers then -- Able to be teleported to.
+            table.insert(ServerJobIDs, Server.id)
         end
+    end
+    
+    if NextPage then
+        ServerData = HttpService:JSONDecode(game:HttpGet(BaseAPI..NextPage))
+    else
+        break
     end
 end
 
-function Teleport()
-    while wait() do
-        pcall(function()
-            TPReturner()
-            if foundAnything ~= "" then
-                TPReturner()
-            end
-        end)
-    end
-end
+TeleportService:TeleportToPlaceInstance(game.PlaceId, ServerJobIDs[#ServerJobIDs])
 end)
-MiscSection:NewButton("Normal Server hop", "nigga read the name", function()
+MiscSection:NewButton("Rejoin", "nigga read the name", function()
     game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
 end)
 
@@ -263,4 +235,4 @@ local Credits = Window:NewTab("Credits")
 local CreditsSection = Credits:NewSection("Credits")
 CreditsSection:NewLabel("Creator: Yours truly")
 CreditsSection:NewLabel("Idea by: Retarted monkeys")
-
+end)
